@@ -1,4 +1,4 @@
-#include <stdio.h>
+ #include <stdio.h>
 //echo makes a new line. so on fd[0] take care of newline! 
 //however when md5 reads from file, newlines are skipped so use gnl
 #include <fcntl.h>
@@ -13,25 +13,65 @@
 #include <limits.h>
 #include "tester/libft/libft.h"
 
+uint32_t reverseBits(uint32_t num) 
+{ 
+    uint32_t count = sizeof(num) * 8; //count equals number of bits an int is equal to.
+    uint32_t reverse_num = num & 1; 
+     
+    num >>= 1;
+    count--;
+   	while (num)
+   	{	
+   		reverse_num <<= 1;
+   		reverse_num |= num & 1;
+   		num >>= 1;
+   		count--;
+   	}
+   	reverse_num <<= count;
+   	return (reverse_num);
+} 
+ 
+// void	print_bits(uint32_t num) {
+// 	unsigned char bit;
+// 	int i = sizeof(uint32_t) * 8;
+// 	while (i--)
+// 	{
+// 		bit = (num >> i & 1) + '0';
+// 		write(1, &bit, 1);
+// 	}
+// }
 
-unsigned long long super_power(unsigned long long base, unsigned long long ex)
+unsigned char *pad_message(char *str, size_t len)
 {
-	unsigned long long res;
-	res = 1;
-	while (ex--)
-		res *= base;
-	return (res);
+	size_t	i;
+	size_t	j;
+	unsigned char	*l;
+
+	i = 1;
+	while (len + i % 64 != 56)
+		i++;
+	ft_strlen(str);
+	l = ft_memalloc(sizeof(unsigned char) * (len + i + 1 + 8));
+	j = -1;
+	while (str[++j])
+		l[j] = str[j];
+	l[j] = 0x80;
+	j += i;
+	i = 8;
+	while (i)
+		l[j++] = len >> (8 * (8 - i--));
+	return (l);
 }
+
 int main() 
 { 
 
-	char *s;
+	char *str;
+	//char *l;
 
-	s = malloc(2);
-	unsigned long long len = 256 + 65;
-	s[0] = len;
-	s[1] = '\0';
-	//printf("%llu", len);
-	printf("%s\n",s);
+	str = "01234567";
+	//l = pad_message(str, ft_strlen(str));
+	//printf("%s\n", l);
+	printf("%s", pad_message(str, 8));
 }
 
