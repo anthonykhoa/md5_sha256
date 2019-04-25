@@ -15,7 +15,7 @@
 
 uint32_t reverseBits(uint32_t num) 
 { 
-    uint32_t count = sizeof(num) * 8; //count equals number of bits an int is equal to.
+    uint32_t count = sizeof(num) * 8; 
     uint32_t reverse_num = num & 1; 
      
     num >>= 1;
@@ -50,13 +50,11 @@ unsigned char *pad_message(char *str, size_t len)
 	i = 1;
 	while (len + i % 64 != 56)
 		i++;
-	ft_strlen(str);
 	l = ft_memalloc(sizeof(unsigned char) * (len + i + 1 + 8));
 	j = -1;
 	while (str[++j])
 		l[j] = str[j];
-	l[j] = 0x80;
-	j += i;
+	l[j++] = 0x80;
 	i = 8;
 	len *= 8;
 	while (i)
