@@ -58,6 +58,7 @@ unsigned char *pad_message(char *str, size_t len)
 	l[j] = 0x80;
 	j += i;
 	i = 8;
+	len *= 8;
 	while (i)
 		l[j++] = len >> (8 * (8 - i--));
 	return (l);
